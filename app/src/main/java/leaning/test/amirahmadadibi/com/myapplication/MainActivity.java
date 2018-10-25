@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +23,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        checkForPaymentResult();
+        getFactorData();
+    }
+
+    private void getFactorData() {
+        Intent intent = getIntent();
+        String name = intent.getStringExtra(Constants.Name);
+        Toast.makeText(MainActivity, name, Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void checkForPaymentResult() {
         Uri data = getIntent().getData();
         ZarinPal.getPurchase(this).verificationPayment(data, new OnCallbackVerificationPaymentListener() {
             @Override
@@ -54,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
             public void onCallbackResultPaymentRequest(int status, String authority, Uri paymentGatewayUri, Intent intent) {
                 if (status == 100) {
                     lunchChromeCustomTab(MainActivity.this, paymentGatewayUri);
-//                    startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "Your Payment Failure :(", Toast.LENGTH_LONG).show();
                 }
