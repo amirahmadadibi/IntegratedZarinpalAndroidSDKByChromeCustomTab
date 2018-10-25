@@ -7,7 +7,9 @@ import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zarinpal.ewallets.purchase.OnCallbackRequestPaymentListener;
@@ -17,25 +19,16 @@ import com.zarinpal.ewallets.purchase.ZarinPal;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Activity MainActivity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkForPaymentResult();
-        getFactorData();
-    }
-
-    private void getFactorData() {
-        Intent intent = getIntent();
-        String name = intent.getStringExtra(Constants.Name);
-        Toast.makeText(MainActivity, name, Toast.LENGTH_SHORT).show();
 
     }
-
-    private void checkForPaymentResult() {
-        Uri data = getIntent().getData();
+    //responsible for making sure of payment
+    private void checkForPaymentResult(Intent intent) {
+        Uri data = intent.getData();
         ZarinPal.getPurchase(this).verificationPayment(data, new OnCallbackVerificationPaymentListener() {
             @Override
             public void onCallbackResultVerificationPayment(boolean isPaymentSuccess, String refID, PaymentRequest paymentRequest) {
@@ -48,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+    //handle payment request through zarinpal
     public void PayTheFuckingPrice() {
         ZarinPal purchase = ZarinPal.getPurchase(this);
         PaymentRequest payment = ZarinPal.getPaymentRequest();
@@ -73,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+    //handle button click
     public void payTheFuckingPrice(View view) {
         PayTheFuckingPrice();
     }
@@ -83,6 +76,12 @@ public class MainActivity extends AppCompatActivity {
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         CustomTabsIntent customTabsIntent = builder.build();
         customTabsIntent.launchUrl(context, uri);
+    }
 
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        checkForPaymentResult(intent);
     }
 }
