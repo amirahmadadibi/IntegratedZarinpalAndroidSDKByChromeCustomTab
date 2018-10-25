@@ -1,7 +1,11 @@
 package leaning.test.amirahmadadibi.com.myapplication;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +18,8 @@ import com.zarinpal.ewallets.purchase.ZarinPal;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Activity MainActivity = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,13 +29,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCallbackResultVerificationPayment(boolean isPaymentSuccess, String refID, PaymentRequest paymentRequest) {
                 if (isPaymentSuccess) {
-                    /* When Payment Request is Success :) */
-                    String message = "Your Payment is Success :) " + refID;
-                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "done" + refID, Toast.LENGTH_SHORT).show();
                 } else {
-                    /* When Payment Request is Failure :) */
-                    String message = "Your Payment is Failure :(";
-                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -39,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     public void PayTheFuckingPrice() {
         ZarinPal purchase = ZarinPal.getPurchase(this);
         PaymentRequest payment = ZarinPal.getPaymentRequest();
-        //If you will test on our sandbox, you can use it
 
         payment.setMerchantID("5dd26514-6b3d-11e8-8622-005056a205be");
         payment.setAmount(1000);
@@ -52,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCallbackResultPaymentRequest(int status, String authority, Uri paymentGatewayUri, Intent intent) {
                 if (status == 100) {
-                    startActivity(intent);
+                    lunchChromeCustomTab(MainActivity.this, paymentGatewayUri);
+//                    startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "Your Payment Failure :(", Toast.LENGTH_LONG).show();
                 }
@@ -64,5 +66,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void payTheFuckingPrice(View view) {
         PayTheFuckingPrice();
+    }
+
+
+    public void lunchChromeCustomTab(Context context, Uri uri) {
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.launchUrl(context, uri);
+
     }
 }
