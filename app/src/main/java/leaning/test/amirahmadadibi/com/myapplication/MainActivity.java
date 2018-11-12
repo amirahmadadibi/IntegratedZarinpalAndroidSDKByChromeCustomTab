@@ -20,9 +20,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        TextView textView = findViewById(R.id.textStart);
     }
 
     //responsible for making sure of payment
@@ -41,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //handle payment request through zarinpal
-    public void PayTheFuckingPrice() {
+    public void paymentRequest() {
         ZarinPal purchase = ZarinPal.getPurchase(this);
         PaymentRequest payment = ZarinPal.getPaymentRequest();
 
@@ -65,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     //handle button click
-    public void payTheFuckingPrice(View view) {
-        PayTheFuckingPrice();
+    public void payThePrice(View view) {
+        paymentRequest();
     }
 
     public void lunchChromeCustomTab(Context context, Uri uri) {
