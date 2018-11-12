@@ -1,7 +1,5 @@
 # Integrat Zarinpal Android SDK With ChromeCustomTab
 simple project to teach how work with custom tab in order to have better payment flow in your application.
-
-tnx to my greate friend and mentor @github/imanx
 ### 1 -  add chrome custom tab to your gradle depenceies 
 ```
     implementation 'com.android.support:customtabs:25.1.0'
