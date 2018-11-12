@@ -1,7 +1,7 @@
 # Integrat Zarinpal Android SDK With ChromeCustomTab
-simple project to teach how work with custom tab in order to have better payment flow in your application
+simple project to teach how work with custom tab in order to have better payment flow in your application.
 
-
+tnx to my greate friend and mentor @github/imanx
 ### 1 -  add chrome custom tab to your gradle depenceies 
 ```
     implementation 'com.android.support:customtabs:25.1.0'
@@ -53,9 +53,11 @@ simple project to teach how work with custom tab in order to have better payment
         });
     }
 ```
-### 5 - you have set your launch mode in your manifest file 
+### 5 - you have to change your launch mode for target activity in your manifest file 
 ```
         <activity
             android:name=".MainActivity"
             android:launchMode="singleInstance">
 ```
+## 6 - for deep understanding on how to work with launch mode and why in every aspects read the documentation below 
+{https://developer.android.com/guide/components/activities/tasks-and-back-stack}
