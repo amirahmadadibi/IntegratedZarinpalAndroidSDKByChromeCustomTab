@@ -1,4 +1,4 @@
-# IntegratedZarinpalWithChromeCustomTab
+# Integrat Zarinpal Android SDK With ChromeCustomTab
 simple project to teach how work with custom tab in order to have better payment flow in your application
 
 
